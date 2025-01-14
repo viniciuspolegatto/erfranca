@@ -120,7 +120,7 @@ const descritivoSebraetecSenai = document.getElementById("descritivoSebraetecSen
         <table style="border: 1px solid black; padding: 1rem; text-align: center; border-collapse: collapse; width: 100%">
           <tr>
            <td style="border: 1px solid black; padding: 8px"><b>VALOR TOTAL</b></td>
-           <td style="border: 1px solid black; padding: 8px">R$ ${(servicoSTecSenaiValor)},00</td>
+           <td style="border: 1px solid black; padding: 8px">R$ ${(servicoSTecSenaiValor)}</td>
         </tr>
         <tr>
            <td style="border: 1px solid black; padding: 8px"><b>VALOR SUBSIDIADO PELO SEBRAE</b></td>
