@@ -1,119 +1,275 @@
-/**
- * This is the main Node.js server script for your project
- * Check out the two endpoints this back-end API provides in fastify.get and fastify.post below
- */
+/* Arquivo server.js usado como motor para os arquivos STecSenai-lounge.html
+STecSenai-pickCliente.html, STecSenai-dadosContrato.html, STecSenai-localStorage.html
+STecSenai-contrato e STecSenai-consumir */
 
-const path = require("path");
+const https = require('https');
+const express = require('express');
+const path = require('path');
+const bodyParser = require('body-parser');
+const mysql = require('mysql');
+const app = express();
+const PORT = process.env.PORT || 3306;
 
-// Require the fastify framework and instantiate it
-const fastify = require("fastify")({
-  // Set this to true for detailed logging:
-  logger: false,
+// Middleware
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// ************************** Pool de Conexões MySQL *************************
+const db = mysql.createPool({
+  connectionLimit: 10, // Limite máximo de conexões
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASS,
+  database: process.env.MYSQL_DB
 });
 
-// ADD FAVORITES ARRAY VARIABLE FROM TODO HERE
+// ************ Rota para busca de CNPJ na Receita Federal do Brasil ***************
+app.get('/cnpj/:cnpj', (req, res) => {
+  const cnpj = req.params.cnpj;
+  const options = {
+    method: 'GET',
+    hostname: 'receitaws.com.br',
+    port: null,
+    path: `/v1/cnpj/${cnpj}`,
+    headers: { Accept: 'application/json' }
+  };
 
-// Setup our static files
-fastify.register(require("@fastify/static"), {
-  root: path.join(__dirname, "public"),
-  prefix: "/", // optional: default '/'
+  const apiReq = https.request(options, (apiRes) => {
+    const chunks = [];
+    apiRes.on('data', (chunk) => { chunks.push(chunk); });
+    apiRes.on('end', () => {
+      const body = Buffer.concat(chunks);
+      res.json(JSON.parse(body.toString()));
+    });
+  });
+
+  apiReq.on('error', (e) => { res.status(500).send(e.message); });
+  apiReq.end();
 });
 
-// Formbody lets us parse incoming forms
-fastify.register(require("@fastify/formbody"));
-
-// View is a templating manager for fastify
-fastify.register(require("@fastify/view"), {
-  engine: {
-    handlebars: require("handlebars"),
-  },
+// ***************** Rota principal - Primeira página a ser aberta **************
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Load and parse SEO data
-const seo = require("./src/seo.json");
-if (seo.url === "glitch-default") {
-  seo.url = `https://${process.env.PROJECT_DOMAIN}.glitch.me`;
-}
+// ************** Rota para adicionar dados ao banco de dados dos CONTRATOS SENAI *******************  
+app.post('/addData', (req, res) => {
+  const { info01, info02, info03, info04, info05, info06, info07, info08, info09, info10, info11, info12, info13, info14, info15, info16, info17, info18, info19, info20, info21, info22, info23, info24, info25, info26, info27, info28, info29, info30, info31, info32, info33, info34, info35, info36, info37 } = req.body;
+  const query = 'INSERT INTO ContratoSebraetecSenai (NomePfSenaiST, CpfPfSenaiST, nascimentoPfSenaiST, telefonePfSenaiST, emailPfSenaiST, cepPfSenaiST, logradouroPfSenaiST, numeroResidenciaPfSenaiST, bairroPfSenaiST, municipioPfSenaiST, testemunhaNomeSenaiST, testemunhaCargoSenaiST, testemunhaCpfSenaiST, ServFamiliaSenaiST, servTituloSenaiST, servRaeSenaiST, servRMSenaiST, servValorSenaiST, servTipoSenaiST, servPublicoSenaiST, servQhoraSenaiST, servModalidadeSenaiST, cnpjPj, razaoPj, fantasiaPj, atividadePj, telefonePj, emailPj, socioPj, situacaoPj, logradouroPj, numeroPj, complementoPj, bairroPj, municipioPj, solicitanteSenaiST, VAR1) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
-/**
- * Our home page route
- *
- * Returns src/pages/index.hbs with data built into it
- */
-fastify.get("/", function (request, reply) {
-  // params is an object we'll pass to our handlebars template
-  let params = { seo: seo };
-
-  // If someone clicked the option for a random color it'll be passed in the querystring
-  if (request.query.randomize) {
-    // We need to load our color data file, pick one at random, and add it to the params
-    const colors = require("./src/colors.json");
-    const allColors = Object.keys(colors);
-    let currentColor = allColors[(allColors.length * Math.random()) << 0];
-
-    // Add the color properties to the params object
-    params = {
-      color: colors[currentColor],
-      colorError: null,
-      seo: seo,
-    };
-  }
-
-  // The Handlebars code will be able to access the parameter values and build them into the page
-  return reply.view("/src/pages/index.hbs", params);
-});
-
-/**
- * Our POST route to handle and react to form submissions
- *
- * Accepts body data indicating the user choice
- */
-fastify.post("/", function (request, reply) {
-  // Build the params object to pass to the template
-  let params = { seo: seo };
-
-  // If the user submitted a color through the form it'll be passed here in the request body
-  let color = request.body.color;
-
-  // If it's not empty, let's try to find the color
-  if (color) {
-    // ADD CODE FROM TODO HERE TO SAVE SUBMITTED FAVORITES
-
-    // Load our color data file
-    const colors = require("./src/colors.json");
-
-    // Take our form submission, remove whitespace, and convert to lowercase
-    color = color.toLowerCase().replace(/\s/g, "");
-
-    // Now we see if that color is a key in our colors object
-    if (colors[color]) {
-      // Found one!
-      params = {
-        color: colors[color],
-        colorError: null,
-        seo: seo,
-      };
-    } else {
-      // No luck! Return the user value as the error property
-      params = {
-        colorError: request.body.color,
-        seo: seo,
-      };
-    }
-  }
-
-  // The Handlebars template will use the parameter values to update the page with the chosen color
-  return reply.view("/src/pages/index.hbs", params);
-});
-
-// Run the server and report out to the logs
-fastify.listen(
-  { port: process.env.PORT, host: "0.0.0.0" },
-  function (err, address) {
+  db.query(query, [info01, info02, info03, info04, info05, info06, info07, info08, info09, info10, info11, info12, info13, info14, info15, info16, info17, info18, info19, info20, info21, info22, info23, info24, info25, info26, info27, info28, info29, info30, info31, info32, info33, info34, info35, info36, info37], (err, result) => {
     if (err) {
-      console.error(err);
-      process.exit(1);
+      console.error('Erro ao inserir dados:', err);
+      res.status(500).send('Erro ao inserir dados: ' + err.message);
+      return;
     }
-    console.log(`Your app is listening on ${address}`);
+    console.log('Dados inseridos com sucesso:', result);
+    res.send('Dados adicionados ao banco de dados');
+  });
+});
+
+// ************** Rota para adicionar dados ao banco de dados dos CONTRATOS AGRO *******************  
+app.post('/addDataAgro', (req, res) => {
+  const { info01, info02, info03, info04, info05, info06, info07, info08, info09, info10, info11, info12, info13, info14, info15, info16, info17, info18, info19, info20, info21, info22, info23, info24, info25, info26, info27, info28, info29, info30, info31, info32, info33, info34, info35, info36, info37 } = req.body;
+  const query = 'INSERT INTO ContratoSebraetecAgro (NomePfAgroST, CpfPfAgroST, nascimentoPfAgroST, telefonePfAgroST, emailPfAgroST, cepPfAgroST, logradouroPfAgroST, numeroResidenciaPfAgroST, bairroPfAgroST, municipioPfAgroST, testemunhaNomeAgroST, testemunhaCargoAgroST, testemunhaCpfAgroST, servFamiliaAgroST, servTituloAgroST, servRaeAgroST, servRMAgroST, servValorAgroST, servTipoAgroST, servPublicoAgroST, servQhoraAgroST, servModalidadeAgroST, cnpjPjAgro, razaoPjAgro, fantasiaPjAgro, atividadePjAgro, telefonePjAgro, emailPjAgro, socioPjAgro, situacaoPjAgro, logradouroPjAgro, numeroPjAgro, complementoPjAgro, bairroPjAgro, municipioPjAgro, solicitanteAgroST, VAR1Agro) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+
+  db.query(query, [info01, info02, info03, info04, info05, info06, info07, info08, info09, info10, info11, info12, info13, info14, info15, info16, info17, info18, info19, info20, info21, info22, info23, info24, info25, info26, info27, info28, info29, info30, info31, info32, info33, info34, info35, info36, info37], (err, result) => {
+    if (err) {
+      console.error('Erro ao inserir dados:', err);
+      res.status(500).send('Erro ao inserir dados: ' + err.message);
+      return;
+    }
+    console.log('Dados inseridos com sucesso:', result);
+    res.send('Dados adicionados ao banco de dados');
+  });
+});
+
+// ************** Rota para adicionar dados ao banco de dados dos CLIENTES SENAI *******************  
+app.post('/addCliente', (req, res) => {
+  const { info01, info02, info03, info04, info05, info06, info07, info08, info09, info10, info11, info12, info13, info14, info15, info16, info17, info18, info19, info20, info21, info22, info23, info24, info25, info26, info27, info28, info29, info30, info31, info32, info33, info34, info35, info36, info37, info38, info39 } = req.body;
+  const query = 'INSERT INTO ClienteSebraetecSenai (ID_contrato, NomePfSenaiST, CpfPfSenaiST, nascimentoPfSenaiST, telefonePfSenaiST, emailPfSenaiST, cepPfSenaiST, logradouroPfSenaiST, numeroResidenciaPfSenaiST, bairroPfSenaiST, municipioPfSenaiST, testemunhaNomeSenaiST, testemunhaCargoSenaiST, testemunhaCpfSenaiST, ServFamiliaSenaiST, servTituloSenaiST, servRaeSenaiST, servRMSenaiST, servValorSenaiST, servTipoSenaiST, servPublicoSenaiST, servQhoraSenaiST, servModalidadeSenaiST, cnpjPj, razaoPj, fantasiaPj, atividadePj, telefonePj, emailPj, socioPj, situacaoPj, logradouroPj, numeroPj, complementoPj, bairroPj, municipioPj, procStarTec, numeroPasta, statusSTecSenai) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+
+  db.query(query, [info01, info02, info03, info04, info05, info06, info07, info08, info09, info10, info11, info12, info13, info14, info15, info16, info17, info18, info19, info20, info21, info22, info23, info24, info25, info26, info27, info28, info29, info30, info31, info32, info33, info34, info35, info36, info37, info38, info39 ], (err, result) => {
+    if (err) {
+      console.error('Erro ao inserir dados:', err);
+      res.status(500).send('Erro ao inserir dados: ' + err.message);
+      return;
+    }
+    console.log('Dados inseridos com sucesso:', result);
+    res.send('Dados adicionados ao banco de dados');
+  });
+});
+
+// ************** Rota para adicionar dados ao banco de dados dos CLIENTES AGRO *******************  
+app.post('/addClienteAgro', (req, res) => {
+  const { info01, info02, info03, info04, info05, info06, info07, info08, info09, info10, info11, info12, info13, info14, info15, info16, info17, info18, info19, info20, info21, info22, info23, info24, info25, info26, info27, info28, info29, info30, info31, info32, info33, info34, info35, info36, info37, info38, info39 } = req.body;
+  const query = 'INSERT INTO ClienteSebraetecAgro (ID_contratoAgro, NomePfAgroST, CpfPfAgroST, nascimentoPfAgroST, telefonePfAgroST, emailPfAgroST, cepPfAgroST, logradouroPfAgroST, numeroResidenciaPfAgroST, bairroPfAgroST, municipioPfAgroST, testemunhaNomeAgroST, testemunhaCargoAgroST, testemunhaCpfAgroST, servFamiliaAgroST, servTituloAgroST, servRaeAgroST, servRMAgroST, servValorAgroST, servTipoAgroST, servPublicoAgroST, servQhoraAgroST, servModalidadeAgroST, cnpjPjAgro, razaoPjAgro, fantasiaPjAgro, atividadePjAgro, telefonePjAgro, emailPjAgro, socioPjAgro, situacaoPjAgro, logradouroPjAgro, numeroPjAgro, complementoPjAgro, bairroPjAgro, municipioPjAgro, procStarTecAgro, numeroPastaAgro, statusSTecAgro) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+
+  db.query(query, [info01, info02, info03, info04, info05, info06, info07, info08, info09, info10, info11, info12, info13, info14, info15, info16, info17, info18, info19, info20, info21, info22, info23, info24, info25, info26, info27, info28, info29, info30, info31, info32, info33, info34, info35, info36, info37, info38, info39 ], (err, result) => {
+    if (err) {
+      console.error('Erro ao inserir dados:', err);
+      res.status(500).send('Erro ao inserir dados: ' + err.message);
+      return;
+    }
+    console.log('Dados inseridos com sucesso:', result);
+    res.send('Dados adicionados ao banco de dados');
+  });
+});
+
+// ************************** Rota para buscar todos os cadastros para CONTRATO SENAI ***************
+app.get('/buscarContrato', (req, res) => {
+  const query = 'SELECT ID_Contrato, NomePfSenaiST, CpfPfSenaiST, municipioPfSenaiST, telefonePfSenaiST, razaoPj, fantasiaPj, municipioPj, telefonePj, emailPfSenaiST FROM ContratoSebraetecSenai';
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Erro ao buscar dados:', err);
+      res.status(500).send('Erro ao buscar dados: ' + err.message);
+      return;
+    }
+    console.log('Dados encontrados:', results);
+    res.json(results);
+  });
+});
+
+// ************************** Rota para buscar todos os cadastros para CONTRATO AGRO ***************
+app.get('/buscarContratoAgro', (req, res) => {
+  const query = 'SELECT ID_ContratoAgro, NomePfAgroST, CpfPfAgroST, municipioPfAgroST, telefonePfAgroST, razaoPjAgro, fantasiaPjAgro, municipioPjAgro, telefonePjAgro, emailPfSenaiST FROM ContratoSebraetecAgro';
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Erro ao buscar dados:', err);
+      res.status(500).send('Erro ao buscar dados: ' + err.message);
+      return;
+    }
+    console.log('Dados encontrados:', results);
+    res.json(results);
+  });
+});
+
+// ************************** Rota para buscar todos os CLIENTES CONSUMIDORES SEBRAETEC SENAI***************
+app.get('/buscarCadastroClientes', (req, res) => {
+  const query = 'SELECT ID, NomePfSenaiST, CpfPfSenaiST, telefonePfSenaiST, emailPfSenaiST, municipioPfSenaiST, testemunhaNomeSenaiST, servTituloSenaiST, servRaeSenaiST, servRMSenaiST, servValorSenaiST, servTipoSenaiST, servQhoraSenaiST, cnpjPj, razaoPj, fantasiaPj, municipioPj, telefonePj, emailPfSenaiST, procStarTec, numeroPasta, statusSTecSenai FROM ClienteSebraetecSenai';
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Erro ao buscar dados:', err);
+      res.status(500).send('Erro ao buscar dados: ' + err.message);
+      return;
+    }
+    console.log('Dados encontrados:', results);
+    res.json(results);
+  });
+});
+
+// ************************** Rota para buscar todos os CLIENTES CONSUMIDORES SEBRAETEC AGRO***************
+app.get('/buscarCadastroClientesAgro', (req, res) => {
+  const query = 'SELECT ID_Agro, NomePfAgroST, CpfPfAgroST, telefonePfAgroST, emailPfAgroST, municipioPfAgroST, testemunhaNomeAgroST, servTituloAgroST, servRaeAgroST, servRMAgroST, servValorAgroST, servTipoAgroST, servQhoraAgroST, cnpjPjAgro, razaoPjAgro, fantasiaPjAgro, municipioPjAgro, telefonePjAgro, emailPfAgroST, procStarTecAgro, numeroPastaAgro, statusSTecAgro FROM ClienteSebraetecAgro';
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Erro ao buscar dados:', err);
+      res.status(500).send('Erro ao buscar dados: ' + err.message);
+      return;
+    }
+    console.log('Dados encontrados:', results);
+    res.json(results);
+  });
+});
+
+
+// *********************** Rota para buscar dados por nome do cliente **********************
+app.get('/buscarPorNome/:nomeCliente', (req, res) => {
+  const nomeCliente = req.params.nomeCliente;
+  // Use % para buscar um trecho do nome
+  const query = 'SELECT * FROM ContratoSebraetecSenai WHERE NomePfSenaiST LIKE ?';
+
+  // Adiciona % antes e depois do nomeCliente para busca parcial
+  const searchParam = `%${nomeCliente}%`;
+
+  db.query(query, [searchParam], (err, results) => {
+    if (err) {
+      console.error('Erro ao buscar dados:', err);
+      res.status(500).send('Erro ao buscar dados: ' + err.message);
+      return;
+    }
+    console.log('Dados encontrados:', results);
+    res.json(results);
+  });
+});
+
+
+
+// ******************** Rota para buscar dados por ID_Contrato ***************** 
+app.get('/buscarPorIdContrato/:idContrato', (req, res) => {
+  const idContrato = req.params.idContrato;
+  const query = 'SELECT * FROM ContratoSebraetecSenai WHERE ID_Contrato = ?';
+
+  db.query(query, [idContrato], (err, results) => {
+    if (err) {
+      console.error('Erro ao buscar dados:', err);
+      res.status(500).send('Erro ao buscar dados: ' + err.message);
+      return;
+    }
+    console.log('Dados encontrados:', results);
+    res.json(results);
+  });
+});
+
+
+// ****************** Rota para atualizar as informações do cliente com base no ID_CLIENTE SENAI **********
+app.put('/atualizarCliente', (req, res) => {
+  const { idCliente, status, numeroPasta, numeroProcesso } = req.body;
+
+  // Array para armazenar as colunas a serem atualizadas e os valores correspondentes
+  let updateFields = [];
+  let updateValues = [];
+
+  // Condições para adicionar somente os campos com valores preenchidos
+  if (status) {
+    updateFields.push("statusSTecSenai = ?");
+    updateValues.push(status);
   }
-);
+  if (numeroPasta) {
+    updateFields.push("numeroPasta = ?");
+    updateValues.push(numeroPasta);
+  }
+  if (numeroProcesso) {
+    updateFields.push("procStarTec = ?");
+    updateValues.push(numeroProcesso);
+  }
+
+  // Verifica se há algum campo para atualizar
+  if (updateFields.length === 0) {
+    res.status(400).send('Nenhuma informação foi fornecida para atualização.');
+    return;
+  }
+
+  // Constrói a query dinâmica com os campos que serão atualizados
+  const query = `
+    UPDATE ClienteSebraetecSenai
+    SET ${updateFields.join(", ")}
+    WHERE ID = ?`;
+
+  // Adiciona o idCliente no array de valores
+  updateValues.push(idCliente);
+
+  // Executa a query com os campos e valores dinâmicos
+  db.query(query, updateValues, (err, result) => {
+    if (err) {
+      console.error('Erro ao atualizar os dados:', err);
+      res.status(500).send('Erro ao atualizar os dados: ' + err.message);
+      return;
+    }
+    console.log('Dados atualizados com sucesso:', result);
+    res.send('Informações atualizadas com sucesso');
+  });
+});
+
+
+
+// ************************** Inicialização do Servidor *************************
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
+
