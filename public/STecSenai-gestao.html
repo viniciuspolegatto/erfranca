@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Busca Cadastro</title>
+    <link rel="stylesheet" href="STecSenai-zConsumirSaldo.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="STecSenai-scrGestao.js" defer></script>
+</head>
+
+<body>
+
+    <header style="background-color: #003366; padding: 10px; color: white;">
+        <h1>Área SEBRAETEC SENAI</h1>
+    </header>
+    <p></p>
+    <div>
+        <button><a href="index.html">VOLTAR</a></button>
+        <button><a href="STecSenai-dadosContrato.html">FAZER CONTRATO</a></button>
+        <button onclick="window.location.href='STecSenai-consumir.html'">CONSUMIR SALDO</button>
+        <button onclick="logout()">Sair</button>
+    </div><br>
+
+    <h3>
+      INFORME O ID_CLIENTE A SER ATUALIZADO E INSIRA AS NOVAS INFORMAÇÕES
+    </h3>
+    <br>
+
+    <table style="border: 1px solid white; border-collapse: collapse; width: 700px">
+        <tr>
+          <th>
+            <table style="border: 1px solid white; border-collapse: collapse; text-align: justify;">
+              <tr>
+                <th style="border: 1px solid white; background-color: white; color: black;">
+                  <div>
+                   <div>
+                     <label>ID_CLIENTE: </label>
+                     <input type="text" id="UpdateId" /><p />
+                     <label>Nº PROCESSO: </label>
+                     <input type="text" id="UpdateNoProcessoStartec"/><p />
+                     <label>Nº PASTA: </label>
+                     <input type="text" id="UpdatePastaServidor" />
+                    </div>
+                  </div>
+                </th>
+                <th style="border: 1px solid white; padding: 5px; background-color: white; color: white;"></th>
+                <th style="border: 1px solid white; background-color: white; color: black;">
+                  <div>
+                    <label>STATUS: </label>
+                    <textarea id="UpdateStatusStartec" style="width: 250px; height: 50px;"></textarea><p />
+                    <button id="AtualizarClienteStatus" style="float: right;">ATUALIZAR</button>
+                  </div>
+                </th>
+              </tr>          
+            </table>
+          </th>
+        </tr>
+    </table>
+  
+    <h1>Buscar Cadastro</h1>
+
+    <h3><b>LISTA DE TODOS OS CONTRATOS ASSINADOS, EXECUTANDO OU EXECUTADOS:</b></h3>
+
+    <div id="listaClientes" class="tabela-container">
+        <h2>Dados Cadastrados:</h2>
+    </div>
+
+</body>
+
+</html>
