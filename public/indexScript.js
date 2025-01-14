@@ -71,22 +71,22 @@ function carregarDados() {
 
     
       // Do contador é substituído o saldo inicial
-      let total42567 = 55;
-      let total42568 = 12;
+      let total42567 = 0;
+      let total42568 = 0;
       let total40864 = 0;
       let total40865 = 0;
-      let total40866 = 1;
-      let total42569 = 6;
+      let total40866 = 0;
+      let total42569 = 0;
       let total40867 = 0;
-      let total40868 = 4;
+      let total40868 = 0;
       let total40869 = 0;    
-      let total40863R = 13;
-      let total41123R = 19;
-      let total40864R = 1;
-      let total42570R = 10;
-      let total40865R = 4;
-      let total40867R = 1;
-      let total40869R = 5;   
+      let total40863R = 0;
+      let total41123R = 0;
+      let total40864R = 0;
+      let total42570R = 0;
+      let total40865R = 0;
+      let total40867R = 0;
+      let total40869R = 0;   
 
     
     /*
@@ -166,10 +166,14 @@ function carregarDados() {
       ).length;
     
       // Do contador é substituído o saldo inicial
+      let total40860 = 0;
+      let total40861 = 0;
+      let total40862 = 0; 
+/*
       let total40860 = 39 - contador40860;
       let total40861 = 0 - contador40861;
       let total40862 = 41 - contador40862; 
-
+*/
     
       // Atualiza os elementos HTML ou armazena em variáveis conforme necessário
       document.querySelector("#contadorNome40860").textContent = total40860;
