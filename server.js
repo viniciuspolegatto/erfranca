@@ -24,14 +24,16 @@ app.post('/enviarEmail', async (req, res) => {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'credenciamentoerbarretos@gmail.com',
-            pass: 'ojcupzxatiqicqdo', // Substitua por um App Password
+            user: 'marcosvp@sebraesp.com.br'
+            pass: 'aergztyvknubuwmk'
+            /*user: 'credenciamentoerbarretos@gmail.com',
+            pass: 'ojcupzxatiqicqdo', //Substitua por um App Password */
         },
     });
 
     const mailOptions = {
-        from: 'credenciamentoerbarretos@gmail.com',
-        to: 'marcosvp@sebraesp.com.br',
+        from: 'marcosvp@sebraesp.com.br',
+        to: 'vinicius.polegatto@hotmail.com',
         //cc: 'vinicius.polegatto@hotmail.com',
         subject: 'ER BARRETOS - SOLICITAÇÃO DE CONSULTORIA',
         text: emailBody,
