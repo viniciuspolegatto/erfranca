@@ -30,7 +30,7 @@ app.post('/enviarEmail', async (req, res) => {
     });
 
     const mailOptions = {
-        from: 'marcosvp@sebraesp.com.br',
+        from: 'credenciamentoerbarretos@gmail.com',
         to: 'vinicius.polegatto@hotmail.com',
         //cc: 'vinicius.polegatto@hotmail.com',
         subject: 'ER BARRETOS - SOLICITAÇÃO DE CONSULTORIA',
