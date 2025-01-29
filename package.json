@@ -13,7 +13,8 @@
     "express": "*",
     "body-parser": "*",
     "mysql": "*",
-    "node-fetch": "^2.7.0"
+    "node-fetch": "^2.7.0",
+    "nodemailer": "^6.10.0"
   },
   "engines": {
     "node": "18.x"
