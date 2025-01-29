@@ -1,7 +1,3 @@
-/* Arquivo server.js usado como motor para os arquivos STecSenai-lounge.html
-STecSenai-pickCliente.html, STecSenai-dadosContrato.html, STecSenai-localStorage.html
-STecSenai-contrato e STecSenai-consumir */
-
 const https = require('https');
 const express = require('express');
 const path = require('path');
@@ -29,7 +25,7 @@ app.post('/enviarEmail', async (req, res) => {
         service: 'gmail',
         auth: {
             user: 'credenciamentoerbarretos@gmail.com',
-            pass: 'zidazixadvzyyslr', // Substitua por um App Password
+            pass: 'ojcupzxatiqicqdo', // Substitua por um App Password
         },
     });
 
