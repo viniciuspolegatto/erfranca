@@ -24,10 +24,8 @@ app.post('/enviarEmail', async (req, res) => {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'marcosvp@sebraesp.com.br',
-            pass: 'aergztyvknubuwmk',
-            /*user: 'credenciamentoerbarretos@gmail.com',
-            pass: 'ojcupzxatiqicqdo', //Substitua por um App Password */
+            user: 'credenciamentoerbarretos@gmail.com',
+            pass: 'ojcupzxatiqicqdo', //Substitua por um App Password 
         },
     });
 
