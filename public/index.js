@@ -1,43 +1,32 @@
-// Ação de coleta e armazenagem de dados da página STecSenai-dadosContrato.html
-document.getElementById('botaoGerarContrato').addEventListener('click', async function() {
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("login-form");
 
-  // Captura os valores dos selects
-  let solicitante = document.getElementById("listaDeTestemunhas").value;
-  let nomeProjeto = document.getElementById("nomeProj").value;
+  form.addEventListener("submit", async function (event) {
+    event.preventDefault();
 
-  // Formatação do corpo do e-mail
-  let emailBody = `
-  Prezada equipe SOMA - CREDENCIAMENTO,
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
 
-  Solicito processamento do pedido abaixo para atendimento da empresa conforme descrito abaixo:
+    try {
+      const response = await fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ username, password })
+      });
 
-  **** DETALHES DO PEDIDO ****
-  Solicitante: ${solicitante}
-  Projeto: ${nomeProjeto}
+      const data = await response.json();
 
-  Agradeço pela atenção.
-  `;
-
-  console.log(emailBody);
-
-  try {
-    // Realiza a requisição fetch dentro do bloco try
-    const response = await fetch('/enviarEmail', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ emailBody }),
-    });
-
-    if (response.ok) {
-      alert('E-mail enviado com sucesso!');
-    } else {
-      alert('Erro ao enviar o e-mail.');
+      if (data.success) {
+        document.cookie = `user=${username}; path=/`; // Armazena o cookie
+        alert("Login bem-sucedido!");
+        window.location.href = "home.html";
+      } else {
+        alert("Usuário ou senha incorretos");
+      }
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+      alert("Erro ao conectar ao servidor");
     }
-  } catch (error) {
-    // Caso haja erro, é capturado aqui no catch
-    console.error('Erro na solicitação de envio de e-mail:', error);
-    alert('Erro ao enviar o e-mail.');
-  }
+  });
 });

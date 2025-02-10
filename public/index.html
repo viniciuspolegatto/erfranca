@@ -1,59 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pesquisa de CNPJ para Contrato</title>
-    <script src="index.js" defer></script>
-  </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <h2>Login</h2>
+    <form id="login-form">
+        <label for="username">Usuário:</label>
+        <input type="text" id="username" required>
+        <br>
+        <label for="password">Senha:</label>
+        <input type="password" id="password" required>
+        <br>
+        <button type="submit">Entrar</button>
+    </form>
 
-  <body>
-    <header style="background-color: green; padding: 10px; color: white">
-      <h1>Detalhes do Produto</h1>
-    </header>
-    <br><br>
-
-    <text style="font-size: 25px"><b>***** FAÇA SUA SOLICITAÇÃO ABAIXO: *****</b></text>
-    <hr/>
-    <br><br>
-
-    <table style="width: 90%; border-collapse: collapse; text-align: justify; background-color: green; padding: 10px; color: white;">
-      <tbody>
-        <tr><td>.</td></tr>
-        <tr><td>.</td></tr>
-        <tr>
-          <td>
-            <label for="listaDeTestemunhas">SOLICITANTE:</label>
-            <select id="listaDeTestemunhas">
-              <option value="">-----</option>
-              <option value="Ariadne Hoiara Zanin | Consultora de Negócios - SEBRAE | CPF: 033.614.189-09">Ariadne Zanin</option>
-              <option value="Raphael Oliveira Sant'ana | Analista de Negócios - SEBRAE | CPF: 385.946.918-58">Raphael Sant'ana</option>
-              <option value="Renata Rodrigues Sampaio | Analista de Negócios - SEBRAE | CPF: 037.535.776-93">Renata Rodrigues</option>
-            </select>
-          </td>
-          <td>
-            <label><b>NOME DO PROJETO: </b></label>
-            <select id="nomeProj">
-              <option value="">-----</option>
-              <option value="Projeto Estruturado | Centro de Custo: Sustentabilidade | Código: 00000">Projeto Estruturado</option>      
-              <option value="Projeto Especial ALI | Centro de Custo: Descarbonização | Código: 00000">Projeto Especial ALI</option>      
-            </select>
-          </td>
-        </tr>
-        <tr><td>.</td></tr>
-      </tbody>
-    </table>
-
-    <br><br>
-
-    <button id="botaoGerarContrato" style="background-color: #00008b; color: white; font-size: 1.2em;">
-      <b>ENVIAR PEDIDO</b>
-    </button>
-
-    <br><br>
-
-    <!-- Inclui o script diretamente no HTML -->
-    <script src="script.js"></script>
-
-  </body>
+    <script src="index.js"></script>
+</body>
 </html>
