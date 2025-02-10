@@ -1,20 +1,19 @@
 {
-  "name": "autenticacao-glitch",
+  "name": "autenticacao-app",
   "version": "1.0.0",
-  "description": "Autenticação com Node.js, MySQL, Express e Cookies no Glitch",
+  "description": "Aplicação de autenticação com Node.js, Express e MySQL",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.21.2",
-    "cors": "^2.8.5",
-    "body-parser": "^2.0.2",
-    "dotenv": "^16.4.7",
-    "express-session": "^1.18.1",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5"
   },
   "engines": {
     "node": "18.x"
-  }
+  },
+  "license": "MIT"
 }

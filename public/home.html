@@ -1,31 +1,15 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Página Home</title>
 </head>
 <body>
-    <h2>Bem-vindo!</h2>
-    <p>Você está autenticado.</p>
-    <button id="logout">Sair</button>
+    <h2>Bem-vindo à Home!</h2>
+    <button onclick="logout()">Logout</button>
+    <button onclick="goToRestrita()">Ir para Página Restrita 1</button>
 
-    <script>
-        async function checkAuth() {
-            const response = await fetch("/auth", { credentials: "include" });
-            const data = await response.json();
-            if (!data.authenticated) {
-                window.location.href = "index.html";
-            }
-        }
-
-        document.getElementById("logout").addEventListener("click", async () => {
-            await fetch("/logout", { method: "POST", credentials: "include" });
-            document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            window.location.href = "index.html";
-        });
-
-        checkAuth();
-    </script>
+    <script src="home.js"></script>
 </body>
 </html>
