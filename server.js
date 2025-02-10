@@ -30,7 +30,12 @@ app.post("/login", (req, res) => {
             if (err) {
                 res.status(500).json({ success: false, message: "Erro no servidor" });
             } else if (results.length > 0) {
-                res.cookie("auth", email, { maxAge: 3600000, httpOnly: true }); // Cookie por 1h
+                res.cookie("auth", email, { 
+                    maxAge: 3600000, 
+                    httpOnly: true, 
+                    sameSite: "None", 
+                    secure: true 
+                });
                 res.json({ success: true, message: "Login bem-sucedido" });
             } else {
                 res.json({ success: false, message: "Credenciais inválidas" });
@@ -40,6 +45,7 @@ app.post("/login", (req, res) => {
 
     connection.end();
 });
+
 
 // Rota de verificação de autenticação
 app.get("/check-auth", (req, res) => {
