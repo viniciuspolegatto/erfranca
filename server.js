@@ -63,6 +63,6 @@ app.get("/logout", (req, res) => {
 });
 
 // Inicia o servidor
-app.listen(3000, () => {
+app.listen(3306, () => {
     console.log("Servidor rodando na porta 3000");
 });
