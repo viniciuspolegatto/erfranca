@@ -1,31 +1,15 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Restrita 1</title>
 </head>
 <body>
-    <h2>Área Restrita 1</h2>
-    <p>Bem-vindo à página restrita 1.</p>
-    <button id="logout">Sair</button>
+    <h2>Bem-vindo à Página Restrita 1!</h2>
+    <button onclick="goBack()">Voltar</button>
+    <button onclick="logout()">Logout</button>
 
-    <script>
-        async function checkAuth() {
-            const response = await fetch("/auth", { credentials: "include" });
-            const data = await response.json();
-            if (!data.authenticated) {
-                window.location.href = "index.html";
-            }
-        }
-
-        document.getElementById("logout").addEventListener("click", async () => {
-            await fetch("/logout", { method: "POST", credentials: "include" });
-            document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            window.location.href = "index.html";
-        });
-
-        checkAuth();
-    </script>
+    <script src="restrita1.js"></script>
 </body>
 </html>
