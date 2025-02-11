@@ -29,5 +29,5 @@ document.getElementById('logoutButton').addEventListener('click', () => {
 
 // Redireciona para a página restrita1
 document.getElementById('restrita1Button').addEventListener('click', () => {
-  window.location.href = '/restrita1'; // Redireciona para a página restrita1
+  window.location.href = '/restrita1.html'; // Redireciona para a página restrita1
 });
