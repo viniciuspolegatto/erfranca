@@ -1,15 +1,16 @@
 require('dotenv').config(); // Carrega as variáveis de ambiente do arquivo .env
 const express = require('express');
+const path = require('path'); // Para manipular caminhos de arquivos
 const mysql = require('mysql2');
 const cookieParser = require('cookie-parser');
 const app = express();
-const PORT = process.env.PORT || 3306; // Usar a porta do ambiente ou 3000 como fallback
+const PORT = process.env.PORT || 3000; // Usar a porta do ambiente ou 3000 como fallback
 
 // Middleware para parsear cookies e JSON
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Para parsear dados de formulários
-app.use(express.static('public')); // Serve arquivos estáticos da pasta 'public'
+app.use(express.static(path.join(__dirname, 'public'))); // Serve arquivos estáticos da pasta 'public'
 
 // Configuração do banco de dados
 const dbConfig = {
@@ -46,7 +47,7 @@ function checkAuth(req, res, next) {
 
 // Rota para a página inicial (login)
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Rota para autenticação
@@ -83,12 +84,12 @@ app.get('/logout', (req, res) => {
 
 // Rota para a página home (restrita)
 app.get('/home', checkAuth, (req, res) => {
-  res.sendFile(__dirname + '/public/home.html');
+  res.sendFile(path.join(__dirname, 'public', 'home.html'));
 });
 
 // Rota para a página restrita1 (restrita)
 app.get('/restrita1', checkAuth, (req, res) => {
-  res.sendFile(__dirname + '/public/restrita1.html');
+  res.sendFile(path.join(__dirname, 'public', 'restrita1.html'));
 });
 
 // Inicia o servidor
