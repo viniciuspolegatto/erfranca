@@ -1,19 +1,37 @@
 {
-  "name": "autenticacao-app",
-  "version": "1.0.0",
-  "description": "Aplicação de autenticação com Node.js, Express e MySQL",
+  "//1": "describes your app its dependencies",
+  "//2": "https://docs.npmjs.com/files/package.json",
+  "//3": "updating this file will donwload and update you packages",
+  "name": "glitch-hello-node",
+  "version": "0.0.1",
+  "description": "A simple Node app built on fastify, instantly up and running.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "dependencies": {
-    "express": "^4.21.2",
-    "mysql": "^2.18.1",
-    "cookie-parser": "^1.4.6",
-    "cors": "^2.8.5"
+    "express": "*",
+    "body-parser": "*",
+    "mysql": "*",
+    "node-fetch": "^2.7.0",
+    "nodemailer": "^6.10.0",
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.4.7",
+    "cors": "^2.8.5",
+    "mysql2": "^3.12.0"
   },
   "engines": {
     "node": "18.x"
   },
-  "license": "MIT"
+  "repository": {
+    "url": "https://glitch.com/edit/#!/glitch-hello-node"
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "glitch",
+    "express"
+  ]
 }
