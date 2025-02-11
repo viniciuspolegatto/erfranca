@@ -70,6 +70,17 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
+// Rota para verificar autenticação
+app.get('/check-auth', (req, res) => {
+  if (req.cookies.auth === 'true') {
+    console.log('Usuário autenticado');
+    res.json({ authenticated: true });
+  } else {
+    console.log('Usuário não autenticado');
+    res.json({ authenticated: false });
+  }
+});
+
 // Serve arquivos estáticos (CSS, JS, imagens) sem verificação de autenticação
 app.use(express.static(path.join(__dirname, 'public')));
 
