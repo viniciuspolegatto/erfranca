@@ -10,7 +10,6 @@ const PORT = process.env.PORT || 3306; // Usar a porta do ambiente ou 3000 como 
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Para parsear dados de formulários
-app.use(express.static(path.join(__dirname, 'public'))); // Serve arquivos estáticos da pasta 'public'
 
 // Configuração do banco de dados
 const dbConfig = {
@@ -91,6 +90,15 @@ app.get('/home', checkAuth, (req, res) => {
 app.get('/restrita1', checkAuth, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'restrita1.html'));
 });
+
+// Bloqueia o acesso direto a arquivos .html
+app.get('*.html', (req, res) => {
+  console.log('Tentativa de acesso direto a arquivo HTML:', req.url);
+  res.redirect('/');
+});
+
+// Serve arquivos estáticos (CSS, JS, imagens) sem verificação de autenticação
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Inicia o servidor
 app.listen(PORT, () => {
