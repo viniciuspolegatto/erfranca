@@ -1,19 +1,11 @@
-async function checkAuth() {
-    const response = await fetch("/check-auth");
-    const data = await response.json();
+document.getElementById('logoutButton').addEventListener('click', () => {
+  fetch('/logout', { method: 'GET' })
+    .then(() => {
+      window.location.href = '/'; // Redireciona para a página inicial
+    })
+    .catch(error => console.error('Erro ao fazer logout:', error));
+});
 
-    if (!data.authenticated) {
-        window.location.href = "/index.html";
-    }
-}
-
-async function logout() {
-    await fetch("/logout");
-    window.location.href = "/index.html";
-}
-
-function goBack() {
-    window.location.href = "/home.html"; // Retorna para a Home
-}
-
-checkAuth();
+document.getElementById('homeButton').addEventListener('click', () => {
+  window.location.href = '/home'; // Redireciona para a página home
+});
