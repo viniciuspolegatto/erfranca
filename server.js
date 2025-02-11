@@ -33,17 +33,6 @@ function connectToDB() {
   return connection;
 }
 
-// Middleware para verificar autenticação
-function checkAuth(req, res, next) {
-  if (req.cookies.auth === 'true') {
-    console.log('Usuário autenticado');
-    next();
-  } else {
-    console.log('Usuário não autenticado, redirecionando para login');
-    res.redirect('/');
-  }
-}
-
 // Rota para a página inicial (login)
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -78,22 +67,6 @@ app.post('/login', (req, res) => {
 app.get('/logout', (req, res) => {
   res.clearCookie('auth');
   console.log('Usuário deslogado');
-  res.redirect('/');
-});
-
-// Rota para a página home (restrita)
-app.get('/home', checkAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'home.html'));
-});
-
-// Rota para a página restrita1 (restrita)
-app.get('/restrita1', checkAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'restrita1.html'));
-});
-
-// Bloqueia o acesso direto a arquivos .html
-app.get('*.html', (req, res) => {
-  console.log('Tentativa de acesso direto a arquivo HTML:', req.url);
   res.redirect('/');
 });
 
