@@ -53,7 +53,7 @@ app.post('/login', (req, res) => {
     if (results.length > 0) {
       console.log('Login bem-sucedido para:', email);
       res.cookie('auth', 'true', { httpOnly: true, sameSite: 'strict', secure: true, maxAge: 3600000 }); // Cookie válido por 1 hora
-      res.status(200).json({ success: true, redirect: '/home' }); // Resposta de sucesso com redirecionamento
+      res.status(200).json({ success: true, redirect: '/home.html' }); // Resposta de sucesso com redirecionamento
     } else {
       console.log('Credenciais inválidas para:', email);
       res.status(401).json({ success: false, message: 'Credenciais inválidas' });
