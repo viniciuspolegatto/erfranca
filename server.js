@@ -4,7 +4,7 @@ const path = require('path'); // Para manipular caminhos de arquivos
 const mysql = require('mysql2');
 const cookieParser = require('cookie-parser');
 const app = express();
-const PORT = process.env.PORT || 3000; // Usar a porta do ambiente ou 3000 como fallback
+const PORT = process.env.PORT || 3306; // Usar a porta do ambiente ou 3000 como fallback
 
 // Middleware para parsear cookies e JSON
 app.use(cookieParser());
