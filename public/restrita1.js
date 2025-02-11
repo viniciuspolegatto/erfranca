@@ -29,5 +29,5 @@ document.getElementById('logoutButton').addEventListener('click', () => {
 
 // Redireciona para a página home
 document.getElementById('homeButton').addEventListener('click', () => {
-  window.location.href = '/home'; // Redireciona para a página home
+  window.location.href = '/home.html'; // Redireciona para a página home
 });
