@@ -1,0 +1,59 @@
+.idbody {
+  margin: 20px;
+  font-family: Arial, sans-serif;
+  margin-top: 90px;
+}
+
+.idfooter {
+    background-color: #f3f3f3;
+    text-align: center;
+    padding: 20px;
+}
+
+
+.header {
+  background-color: #f2f2f2; /* Cor de fundo do cabeçalho */
+  z-index: 10;
+  position: fixed; /* Cabeçalho fixo */
+  top: 0;
+  right: 0;
+  left: 0;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+@media print {
+  .header {
+    width: 100%;
+    padding: 10px; /* Ajuste o padding para a impressão */
+    text-align: center; /* Garante que o conteúdo (imagem) seja centralizado */
+  }
+
+  #header-logo {
+    width: 100px; /* Mantém o tamanho da imagem na impressão */
+    height: 100px;
+    margin: 0 auto; /* Centraliza a imagem horizontalmente durante a impressão */
+  }
+
+  .div-pusher {
+    height: 77px; /* Altura do espaço reservado para o cabeçalho na impressão */
+  }
+
+  .printer-table {
+    width: 100%;
+    border-collapse: collapse; /* Colapsa as bordas da tabela */
+  }
+
+  @page {
+    margin-top: 100px; /* Espaço reservado para o cabeçalho */
+  }
+}
+
+.main {
+  margin-top: 100px; /* Margem para evitar sobreposição com o cabeçalho fixo */
+}
+
+.container {
+  padding: 20px; /* Espaçamento interno da container */
+}

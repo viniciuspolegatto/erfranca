@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Busca Cadastro</title>
+    <link rel="stylesheet" href="STecSenai-zConsumirSaldo.css" />
+    <script src="STecSenai-scrConsumir.js" defer></script>
+</head>
+  
+<body>
+    <header style="background-color: #003366; padding: 10px; color: white;">
+        <h1>Área SEBRAETEC SENAI</h1>
+    </header>
+        <p>Seu login está ativo!</p>
+  <div>
+      <button><a href="index.html">VOLTAR</a></button>
+      <button><a href="STecSenai-dadosContrato.html">FAZER CONTRATO</a></button>
+      <button onclick="window.location.href='STecSenai-gestao.html'">GESTÃO</button>
+      <button id="logoutButton">Logout</button>
+      <button id="restrita1Button">Ir para Restrita1</button>
+  </div>
+<hr>
+      
+        <h1>Buscar Cadastro</h1>
+        <input type="text" id="nomeBusca" placeholder="Digite o Nome do Cliente" />
+        <button id="botaoPesquisar">PESQUISAR</button>
+        <p><b>LISTA DE TODOS OS CONTRATOS FEITOS - ASSINADOS E NÃO ASSINADOS:</b></p>
+        <div id="listaDados" class="tabela-container">
+            <h2>Dados Cadastrados:</h2>
+        </div>
+  
+  <br><br><br>
+
+</body>
+
+</html>

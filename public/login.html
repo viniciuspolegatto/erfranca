@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+</head>
+<body>
+  <h1>Login</h1>
+  <form id="loginForm">
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email" required>
+    <br>
+    <label for="password">Senha:</label>
+    <input type="password" id="password" name="password" required>
+    <br>
+    <button type="submit">Entrar</button>
+  </form>
+  <script src="/login.js"></script> <!-- Caminho correto para o arquivo JS -->
+</body>
+</html>
+
+
+
+
+<!-- 
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestão de Produtos Tecnológicos - ER Barretos</title>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="login.js" defer></script>
+  
+    <style>
+        /* Estilo para o modal de login */
+        #loginModal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            border: 1px solid #333;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+
+        #modalOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+  
+    <h1>Bem-vindo! Faça login para continuar</h1>
+    <button onclick="openLoginModal()">Login</button>
+
+    <!-- Modal de Login --
+    <div id="modalOverlay"></div>
+    <div id="loginModal">
+        <h2>Entrar</h2>
+        <label for="username">Usuário:</label>
+        <input type="text" id="username" name="username">
+        <br><br>
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password">
+        <br><br>
+        <button onclick="login()">Continuar</button>
+        <button onclick="cancelLogin()">Cancelar</button>
+    </div>
+
+</body>
+</html>
+-->
+
+
+<!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& FUTURO &&&&&&&&&&&&&&&&&&
+<!-- CADASTRO DE USUÁRIO COM SENHA PRÓPRIA &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& --
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Autenticação</title>
+  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestão de Produtos Tecnológicos - ER Barretos</title>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="login.js" defer></script>
+  
+</head>
+<body>
+    <h1>Bem-vindo! Escolha uma opção:</h1>
+    <button onclick="openModal('registerModal')">Cadastrar</button>
+
+    <!-- Modal de Cadastro --
+    <div id="registerModal">
+        <h2>Cadastrar</h2>
+        <input type="email" id="registerEmail" placeholder="E-mail">
+        <input type="password" id="registerPassword" placeholder="Senha">
+        <button onclick="register()">Cadastrar</button>
+        <button class="close-btn" onclick="closeModal()">Cancelar</button>
+    </div>
+
+
+</body>
+</html>
+-->

@@ -1,0 +1,42 @@
+/* Contêiner da tabela */
+.table-container {
+    width: 97%;
+    height: 600px;
+    border: 1px solid blue; /* Contorno azul */
+    border-collapse: collapse; /* Remove espaços entre as células */
+    padding: 0px;
+    overflow: auto; /* Adiciona rolagem se o conteúdo exceder o tamanho do contêiner */
+    margin-left: auto; /* Centraliza o contêiner horizontalmente */
+    margin-right: auto;
+    position: absolute; /* Posiciona o contêiner na tela */
+    left: 10px; /* Distância da borda esquerda da tela */
+    right: 10px;
+}
+
+/* Estilo da tabela */
+table {
+    width: 100%; /* Faz a tabela ocupar 100% da largura do contêiner */
+    height: 100%; /* Faz a tabela ocupar 100% da altura do contêiner */
+    border-collapse: collapse;
+    table-layout: auto; /* Ajusta a largura das colunas ao conteúdo */
+}
+
+/* Estilo dos cabeçalhos e células */
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+    width: auto; /* Permite que a largura da célula se ajuste ao conteúdo */
+    word-wrap: break-word; /* Permite a quebra de palavras longas */
+}
+
+/* Estilo dos cabeçalhos fixos */
+thead th {
+    position: sticky;
+    top: 0;
+    background-color: black;
+    color: white;
+    text-align: center;
+    z-index: 1; /* Garante que os cabeçalhos fiquem sobre o conteúdo */
+    border: 0px solid white; /* Contorno branco dos cabeçalhos */
+}

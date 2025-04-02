@@ -1,0 +1,39 @@
+<!-- Arquivo STecSenai-pickCliente.html, usado para dar resposta sobre informações de 
+  um cliente pesquisado em um banco de dados-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Resultados</title>
+    <script src="STecSenai-scrPickCliente.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+      <header style="background-color: #003366; padding: 10px; color: white;">
+        <h1>Área SEBRAETEC SENAI</h1>
+    </header>
+        <p>Seu login está ativo!</p>
+    <button onclick="window.location.href='STecSenai-gestao.html'">GESTÃO</button>
+    <button onclick="window.location.href='STecSenai-consumir.html'">VOLTAR</button>
+    <button id="logout">Logout</button> 
+    <hr>
+    <h1>Resultados da Pesquisa</h1>
+    <br />
+
+    <label id="labelConsumirSTecSenai">ID do Contrato</label>
+    <input type="text" id="consumirSTecSenai" placeholder="ID_Contrato" />
+    <button id="consumirPickCliente">CONSUMIR SALDO</button>
+    <br /><br />
+    <hr style="border: 1px solid black" />
+    <br />
+    <div id="resultados"></div>
+    <br />
+    <hr style="border: 1px solid black" />
+    <br />
+
+    <button>
+      <a href="index.html">VOLTAR</a>
+    </button>
+  </body>
+</html>
